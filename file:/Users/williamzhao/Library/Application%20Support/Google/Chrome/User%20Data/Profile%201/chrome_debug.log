@@ -1,0 +1,31 @@
+[1290:259:0112/132917.091274:WARNING:chrome_main_delegate.cc(667)] This is Chrome version 120.0.6099.216 (not a warning)
+[1290:259:0112/132917.277197:INFO:policy_logger.cc(144)] :components/enterprise/browser/controller/chrome_browser_cloud_management_controller.cc(168) Starting CBCM Controller Initialization
+[1290:259:0112/132917.277219:INFO:policy_logger.cc(144)] :components/enterprise/browser/controller/chrome_browser_cloud_management_controller.cc(196) No machine level policy manager exists.
+[1290:259:0112/132917.905909:INFO:CONSOLE(6)] "Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.", source: chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/_generated_background_page.html (6)
+[1290:259:0112/132930.108850:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:265059
+[1290:259:0112/132930.185115:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:5087
+[1290:259:0112/132930.429635:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:883094
+[1290:259:0112/132930.559841:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:45116
+[1290:259:0112/132932.338712:WARNING:download_manager_impl.cc(708)] A download with the same GUID already exists, the new request is ignored.
+[1290:259:0112/132932.417186:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:2746900
+[1290:259:0112/132932.501321:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:3844
+[1290:259:0112/132933.081134:WARNING:download_manager_impl.cc(708)] A download with the same GUID already exists, the new request is ignored.
+[1290:259:0112/132934.973523:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:33994661
+[1290:259:0112/132944.313915:INFO:CONSOLE(6)] "Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.", source: chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/_generated_background_page.html (6)
+[1290:259:0112/132944.763337:INFO:CONSOLE(0)] "Error in event handler: TypeError: Cannot read properties of undefined (reading 'id')
+    at Object.restore (chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/headless-commons.bundle.js:1:1465779)
+    at chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/headless-commons.bundle.js:1:1474020", source: chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/_generated_background_page.html (0)
+[1290:259:0112/132944.908465:INFO:CONSOLE(0)] "[DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o", source: https://accounts.google.com/v3/signin/identifier?color_scheme=dark&flow=promo&ssp=1&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Fchrome%2Fsync%2Ffinish%3Fcontinue%3Dhttps%253A%252F%252Faccounts.google.com%252FManageAccount%253Fnc%253D1%26est%3DAJn06tVqOEp7Y8vM8kVDZ9HlnZ-B2XPA05hjgICZ6KHn5vCqvaIGCWtcZ68Y-Zvvv3edWabxkAv351vqNJmMLQ&flowName=GlifDesktopChromeSync&dsh=S-1508988776%3A1705094984311761 (0)
+[1290:259:0112/132944.912289:INFO:CONSOLE(287)] "%c%s color: red; background: yellow; font-size: 24px; WARNING!", source: https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.nOJ7WSKZu4M.es5.O/am=P8BCUo4FQIz5_5y_Z5weBgAAAAAAAAAAWAPYAQ/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlFPh2jLC8t2z1Bx7JKxzEEJRnureA/m=_b,_tp (287)
+[1290:259:0112/132944.912309:INFO:CONSOLE(287)] "%c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand.", source: https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.nOJ7WSKZu4M.es5.O/am=P8BCUo4FQIz5_5y_Z5weBgAAAAAAAAAAWAPYAQ/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlFPh2jLC8t2z1Bx7JKxzEEJRnureA/m=_b,_tp (287)
+[1290:259:0112/132945.380070:ERROR:web_contents_delegate.cc(255)] WebContentsDelegate::CheckMediaAccessPermission: Not supported.
+[1290:259:0112/132945.380087:ERROR:web_contents_delegate.cc(255)] WebContentsDelegate::CheckMediaAccessPermission: Not supported.
+[1337:259:0112/132945.476302:ERROR:system_services.cc(31)] SetApplicationIsDaemon: Error Domain=NSOSStatusErrorDomain Code=-50 "paramErr: error in user parameter list" (-50)
+[1296:259:0112/132950.608554:ERROR:gles2_command_buffer_stub.cc(313)] ContextResult::kFatalFailure: Failed to create context.
+[1290:259:0112/132954.854013:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:5087
+[1290:259:0112/132955.351758:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 0, file size:45116
+[1290:259:0112/132955.815745:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 1, file size:0
+[1290:259:0112/132955.818520:WARNING:controller_impl.cc(1190)] Background download complete, client: 6, completion type: 1, file size:0
+[1290:259:0112/133014.498584:INFO:CONSOLE(6)] "Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.", source: chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/_generated_background_page.html (6)
+[1290:259:0112/133106.105437:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
