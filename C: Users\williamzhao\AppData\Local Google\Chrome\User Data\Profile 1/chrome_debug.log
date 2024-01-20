@@ -1,5 +1,0 @@
-[7359:259:0111/220259.092463:WARNING:chrome_main_delegate.cc(667)] This is Chrome version 120.0.6099.216 (not a warning)
-[7359:259:0111/220259.320217:INFO:policy_logger.cc(144)] :components/enterprise/browser/controller/chrome_browser_cloud_management_controller.cc(168) Starting CBCM Controller Initialization
-[7359:259:0111/220259.320473:INFO:policy_logger.cc(144)] :components/enterprise/browser/controller/chrome_browser_cloud_management_controller.cc(196) No machine level policy manager exists.
-[7359:259:0111/220259.996012:INFO:CONSOLE(6)] "Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.", source: chrome-extension://difjajjajoeppdgbcbbhbdblblmkcbhp/_generated_background_page.html (6)
-[7359:259:0111/220359.194748:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
