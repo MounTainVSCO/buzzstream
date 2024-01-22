@@ -29,7 +29,7 @@ def scroll_down():
     
 def get_filter_urls(min_da, max_da):
     urls = []
-    serp_listings = WebDriverWait(driver, 5).until(
+    serp_listings = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, "MjjYud"))
     )
     for listing in serp_listings:
@@ -93,13 +93,13 @@ def check_and_send(url_list):
         # (IF NOT FLAG) IGNORE DATE
 
         try:
-            iframe = WebDriverWait(driver, 5).until(
+            iframe = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "buzzstream-extension-form"))
             )
             driver.switch_to.frame(iframe)
                 
             try:
-                save_buzzstream_button_exist = WebDriverWait(driver, 5).until(
+                save_buzzstream_button_exist = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, "//save-button[@ng-click='persistChanges()']/button"))
                     
                 )
@@ -109,7 +109,7 @@ def check_and_send(url_list):
 
             if (has_not_been_logged_flag):
                 try: 
-                    email_list = WebDriverWait(driver, 3).until(
+                    email_list = WebDriverWait(driver, 10).until(
                         EC.presence_of_all_elements_located((By.XPATH, "//contact-info-field[@placeholder='Email']//input[@type='text']"))
                     )
                     if (email_list): 
@@ -126,36 +126,10 @@ def check_and_send(url_list):
             # CASE CHECK TIME STAMP DATE
             # IF IT HAS NOT BEEN MORE THAN TWO MONTHS AND NOT BEEN MARKED AS LOGGED: MOVE TO NEXT SITE
 
-            try:
-                WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.XPATH, "//li[@ng-class=\"{ active: isCurrentPath('/history') }\"]")) 
-                ).click()
-            except Exception:
-                print("Cannot click history")
-
-            try:
-
-                try:
-                    time_date_stamp = WebDriverWait(driver, 5).until(
-                        EC.presence_of_element_located((By.XPATH,"//span[@class='chronicle-timestamp']"))
-                    ).text
-                except Exception:
-                    print("could not find time date stamp")
-                    pass
-                
-                if (not check_if_more_than_two_months(time_date_stamp) and not has_not_been_logged_flag):
-                    print(f"Last Date: {time_date_stamp} not been more than 2 Months or not. Skipping... ")
-                    pyautogui.hotkey("command", "0", interval=0.3)
-                    continue
-            except Exception:
-                pyautogui.hotkey("command", "0", interval=0.3)
-                continue
-
-            print(f"Last Date: {time_date_stamp} Moving Forward ")
 
             # CHECK IF IN SEQUENCE
             try:
-                WebDriverWait(driver, 5).until(
+                WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, "//li[@ng-class=\"{ active: isCurrentPath('/qualify') }\"]"))
                 ).click()
             except Exception:
@@ -163,14 +137,22 @@ def check_and_send(url_list):
                 continue
         
             try:
-                WebDriverWait(driver, 5).until(
+                # XPath to locate the specified element
+                xpath = "//div[@class='pr-4 pl-4']//div[@class='alert alert-warning']//div[contains(text(), 'Warning: Contact is in an active sequence for this project')]"
+                element = driver.find_element(By.XPATH, xpath)
+                if (element):
+                    continue
+            except:
+                pass
+            try:
+                WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'card-right')]//button[contains(@class, 'btn-primary') and text()='Add']"))
                 ).click()
             except Exception as e:
                 pass
 
             try:
-                research_page_url_element = WebDriverWait(driver, 5).until(
+                research_page_url_element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.ID, "Research Page Url"))
                 )
                 research_page_url = research_page_url_element.get_attribute('value')
@@ -183,7 +165,7 @@ def check_and_send(url_list):
                 continue
 
             try:
-                WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-link') and contains(., 'compose')]"))).click()
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'flex-grow-1') and contains(@class, 'text-right') and contains(@class, 'position-absolute')]//button[contains(@class, 'btn') and contains(@class, 'btn-link') and contains(., 'compose')]"))).click()
             except Exception:
                 pyautogui.hotkey("command", "0", interval=0.3)
                 continue
@@ -194,7 +176,7 @@ def check_and_send(url_list):
             time.sleep(2)
 
             try:
-                WebDriverWait(driver, 5).until(
+                WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, "//li[@ng-class=\"{ active: isCurrentPath('/') }\"]"))
                 ).click()
             except Exception:
@@ -235,58 +217,54 @@ if (__name__ == '__main__'):
     # Outbound links > 20
     # 
 
-    search_queries =[
-    'inurl:resources progressive overload cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:links cardio training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:fitness progressive overload site:.org -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:blog VO2 max training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:health endurance training site:.edu -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:fitness cardio workouts -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:training increase endurance site:.gov -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:articles cardiovascular fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:tips progressive cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:health building endurance site:.net -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:guides improving VO2 max -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:advice cardio exercises -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:info progressive overload in fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:faq cardio training tips -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:workouts enhancing endurance site:.com -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:community fitness training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:forum cardio fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:discussion endurance sports -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:news VO2 max improvement -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:updates progressive training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:support cardiovascular health -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:help fitness methods -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:content overload principle in cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:directory endurance exercises -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:hub cardio workout plans -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:fitness progressive overload strategies site:.org -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:techniques improving cardio fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:ideas VO2 max workouts -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:insights endurance training methods -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:experts cardio training principles -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:knowledge progressive overload benefits -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:learn maximizing endurance -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:research cardio training science -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:science fitness overload -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:studies cardiovascular improvements -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:reports endurance workout tips -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:statistics VO2 max data -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:data progressive cardio training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:analysis fitness endurance -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:overview cardio overload techniques -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:summary endurance building -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:concepts cardio fitness training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:principles maximizing VO2 max -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:approaches endurance training plans -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:strategies cardio workout efficiency -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:methods progressive overload in cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:techniques enhancing cardiovascular fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:practices cardio training tips -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:case-studies endurance sports training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:examples VO2 max increasing workouts -site:.gov -site:.edu inurl:resources OR inurl:links'
-]
+    search_queries = [
+#  'blog VO2 max training -site:.gov -site:.edu resources OR links -site:youtube.com',
+#  'health endurance training site:.edu -site:.gov -site:.edu resources OR links -site:youtube.com',
+#  'fitness cardio workouts -site:.gov -site:.edu resources OR links -site:youtube.com',
+#  'intitle:training increase endurance site:.gov -site:.gov -site:.edu resources OR links -site:youtube.com',
+#  'articles cardiovascular fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
+#  'tips progressive cardio -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'progressive overload site:.net -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'progressive overload running -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'advice cardio exercises -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'info progressive overload in fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'faq cardio training tips -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'intitle:workouts enhancing endurance site:.com -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'community fitness training -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'progressive overload cardio fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'discussion endurance sports progressive overload -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'news VO2 max improvement progressive overload -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'updates progressive training -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'support cardiovascular health -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'help fitness methods -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'content overload principle in cardio -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'directory endurance exercises -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'hub cardio workout plans -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'intitle:fitness progressive overload strategies site:.org -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'techniques improving cardio fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'ideas VO2 max workouts -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'insights endurance training methods -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'experts cardio training principles -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'knowledge progressive overload benefits -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'learn maximizing endurance -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'research cardio training science -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'science fitness overload -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'studies cardiovascular improvements -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'reports endurance workout tips -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'statistics VO2 max data -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'data progressive cardio training -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'analysis fitness endurance -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'overview cardio overload techniques -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'summary endurance building -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'concepts cardio fitness training -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'principles maximizing VO2 max -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'approaches endurance training plans -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'strategies cardio workout efficiency -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'methods progressive overload in cardio -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'techniques enhancing cardiovascular fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'practices cardio training tips -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'case-studies endurance sports training -site:.gov -site:.edu resources OR links -site:youtube.com',
+ 'examples VO2 max increasing workouts -site:.gov -site:.edu resources OR links -site:youtube.com']
     
 
     for search_operator in search_queries:
@@ -295,7 +273,7 @@ if (__name__ == '__main__'):
             time.sleep(random.randrange(1, 5))
             driver.get(f"https://www.google.com/search?q={search_operator}")
             scroll_down()
-            urls = get_filter_urls(1, 21)
+            urls = get_filter_urls(1, 61)
             check_and_send(urls)
         except Exception:
             continue
