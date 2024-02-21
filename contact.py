@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver import ActionChains
 from datetime import datetime
 from pynput.mouse import Button, Controller
 import time, pyautogui, random
@@ -82,7 +81,10 @@ def check_and_send(url_list):
         has_not_been_logged_flag=False
         
         driver.get(link)
-        pyautogui.hotkey("command", "0", interval=0.5)
+        pyautogui.keyDown('ctrl')
+        time.sleep(0.1)
+        pyautogui.press('0')
+        pyautogui.keyUp('ctrl')
         
         # Buzzstream_open = True
 
@@ -117,7 +119,10 @@ def check_and_send(url_list):
 
                 except Exception:
                     print("No Email List or No Valid Emails Found! ")
-                    pyautogui.hotkey("command", "0", interval=0.3)
+                    pyautogui.keyDown('ctrl')
+                    time.sleep(0.1)
+                    pyautogui.press('0')
+                    pyautogui.keyUp('ctrl')
                     continue
                 
             time.sleep(1)
@@ -145,10 +150,16 @@ def check_and_send(url_list):
                 
                 if (not check_if_more_than_two_months(time_date_stamp) and not has_not_been_logged_flag):
                     print(f"Last Date: {time_date_stamp} not been more than 2 Months or not. Skipping... ")
-                    pyautogui.hotkey("command", "0", interval=0.3)
+                    pyautogui.keyDown('ctrl')
+                    time.sleep(0.1)
+                    pyautogui.press('0')
+                    pyautogui.keyUp('ctrl')
                     continue
             except Exception:
-                pyautogui.hotkey("command", "0", interval=0.3)
+                pyautogui.keyDown('ctrl')
+                time.sleep(0.1)
+                pyautogui.press('0')
+                pyautogui.keyUp('ctrl')
                 continue
 
             print(f"Last Date: {time_date_stamp} Moving Forward ")
@@ -159,7 +170,7 @@ def check_and_send(url_list):
                     EC.presence_of_element_located((By.XPATH, "//li[@ng-class=\"{ active: isCurrentPath('/qualify') }\"]"))
                 ).click()
             except Exception:
-                pyautogui.hotkey("command", "0", interval=0.3)
+                pyautogui.hotkey("control", "0", interval=0.3)
                 continue
         
             try:
@@ -176,16 +187,25 @@ def check_and_send(url_list):
                 research_page_url = research_page_url_element.get_attribute('value')
 
                 if (not research_page_url):
-                    pyautogui.hotkey("command", "0", interval=0.3)
+                    pyautogui.keyDown('ctrl')
+                    time.sleep(0.1)
+                    pyautogui.press('0')
+                    pyautogui.keyUp('ctrl')
                     continue
             except Exception as e:
-                pyautogui.hotkey("command", "0", interval=0.3)
+                pyautogui.keyDown('ctrl')
+                time.sleep(0.1)
+                pyautogui.press('0')
+                pyautogui.keyUp('ctrl')
                 continue
 
             try:
                 WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-link') and contains(., 'compose')]"))).click()
             except Exception:
-                pyautogui.hotkey("command", "0", interval=0.3)
+                pyautogui.keyDown('ctrl')
+                time.sleep(0.1)
+                pyautogui.press('0')
+                pyautogui.keyUp('ctrl')
                 continue
             
             time.sleep(2)
@@ -201,7 +221,10 @@ def check_and_send(url_list):
                 continue
 
             driver.switch_to.default_content()
-            pyautogui.hotkey("command", "0", interval=0.3)
+            pyautogui.keyDown('ctrl')
+            time.sleep(0.1)
+            pyautogui.press('0')
+            pyautogui.keyUp('ctrl')
             print(f"Successfully Sequenced For {link}")
             count += 1
         
@@ -215,94 +238,67 @@ def check_and_send(url_list):
 if (__name__ == '__main__'):
     chrome_options = Options()
     chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--disable-geolocation")
-    chrome_options.add_argument("--remote-allow-origins=*")
-    chrome_options.add_argument('user-data-dir=/Users/williamzhao/Library/Application Support/Google/Chrome/')
-    chrome_options.add_argument("--profile-directory=Profile 1")
+    # chrome_options.add_argument("--disable-geolocation")
+    # chrome_options.add_argument("--remote-allow-origins=*")
+    chrome_options.add_argument('--user-data-dir=/Users/dynas/AppData/Local/Google/Chrome/User Data/HelloWorld29')
+    # chrome_options.add_argument("--profile-directory=HelloWorld29")
     chrome_options.add_argument("--start-maximized")
-    service = Service(executable_path='/opt/homebrew/bin/chromedriver')
+    # service = Service(executable_path='chromedriver.exe')
 
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    driver.execute_script("document.body.style.zoom='70%'")
-    action = ActionChains(driver)
+    # /Users/dynas/Downloads/chrome-win64 (1)/chrome-win64/chrome.exe
+    # /Program Files/Google/Chrome/Application/chrome.exe
+    # C:\Users\dynas\buzzstream\chromedriver.exe
+
+    driver = webdriver.Chrome(options=chrome_options)
+
+    # driver.execute_script("document.body.style.zoom='70%'")
     mouse = Controller()
 
-
-    # mental-health-links, mental-health-resources, mental-health-links
-    # gov, no edu, huge websites
-    # Outbound links > 20
-    # 
-
-    search_queries =[
-    'inurl:resources progressive overload cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:links cardio training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:fitness progressive overload site:.org -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:blog VO2 max training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:health endurance training site:.edu -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:fitness cardio workouts -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:training increase endurance site:.gov -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:articles cardiovascular fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:tips progressive cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:health building endurance site:.net -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:guides improving VO2 max -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:advice cardio exercises -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:info progressive overload in fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:faq cardio training tips -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:workouts enhancing endurance site:.com -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:community fitness training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:forum cardio fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:discussion endurance sports -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:news VO2 max improvement -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:updates progressive training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:support cardiovascular health -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:help fitness methods -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:content overload principle in cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:directory endurance exercises -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:hub cardio workout plans -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'intitle:fitness progressive overload strategies site:.org -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:techniques improving cardio fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:ideas VO2 max workouts -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:insights endurance training methods -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:experts cardio training principles -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:knowledge progressive overload benefits -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:learn maximizing endurance -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:research cardio training science -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:science fitness overload -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:studies cardiovascular improvements -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:reports endurance workout tips -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:statistics VO2 max data -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:data progressive cardio training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:analysis fitness endurance -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:overview cardio overload techniques -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:summary endurance building -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:concepts cardio fitness training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:principles maximizing VO2 max -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:approaches endurance training plans -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:strategies cardio workout efficiency -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:methods progressive overload in cardio -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:techniques enhancing cardiovascular fitness -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:practices cardio training tips -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:case-studies endurance sports training -site:.gov -site:.edu inurl:resources OR inurl:links',
-    'inurl:examples VO2 max increasing workouts -site:.gov -site:.edu inurl:resources OR inurl:links'
+    search_operators = [
+    'lebron james awesome Breast Cancer Survivors resources intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors support groups intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors recovery stories intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors nutrition advice intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors exercise tips intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors mental health intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors fundraising events intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors research updates intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors survivor networks intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors advocacy organizations intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors survivor blogs intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors treatment options intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors healing practices intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors survivorship care plans intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors financial aid intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors legal support intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors community forums intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors educational materials intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors healthcare services intext:wordpress after:2023-1-26',
+    # 'Breast Cancer Survivors survivor testimonials intext:wordpress after:2023-1-26'
 ]
-    
 
-    for search_operator in search_queries:
-        if (counter == 170): break
+
+    # check_and_send(["https://decordiveseo.com/"])
+    # time.sleep(999)
+    urls=[]
+    for search_operator in search_operators:
         try:
             time.sleep(random.randrange(1, 5))
             driver.get(f"https://www.google.com/search?q={search_operator}")
             scroll_down()
-            urls = get_filter_urls(1, 21)
-            check_and_send(urls)
+            urls.extend(get_filter_urls(0, 41))
+            
+            
         except Exception:
             continue
+    print(urls)
 
-    #https://www.providencetherapybc.com/resources
-    #https://braininjuryconnectionsnw.org/resources/health-care-and-alternative-medical-practices/counselors-and-mental-health/
-    # check_and_send(["https://www.goshen1.org/resources/parents/mental_health_resources.php"])
+    try:
+        check_and_send(urls)
+    except Exception:
+        pass
     
 
     time.sleep(9999)

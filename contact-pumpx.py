@@ -201,10 +201,10 @@ if (__name__ == '__main__'):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-geolocation")
     chrome_options.add_argument("--remote-allow-origins=*")
-    chrome_options.add_argument('user-data-dir=/Users/williamzhao/Library/Application Support/Google/Chrome/')
+    chrome_options.add_argument('user-data-dir=/Users/dynas/AppData/Local/Google/Chrome/User Data/Default')
     chrome_options.add_argument("--profile-directory=Profile 1")
     chrome_options.add_argument("--start-maximized")
-    service = Service(executable_path='/opt/homebrew/bin/chromedriver')
+    service = Service(executable_path='/Users/dynas/buzzstream/chromedriver.exe')
 
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.execute_script("document.body.style.zoom='70%'")
@@ -217,70 +217,65 @@ if (__name__ == '__main__'):
     # Outbound links > 20
     # 
 
-    search_queries = [
-#  'blog VO2 max training -site:.gov -site:.edu resources OR links -site:youtube.com',
-#  'health endurance training site:.edu -site:.gov -site:.edu resources OR links -site:youtube.com',
-#  'fitness cardio workouts -site:.gov -site:.edu resources OR links -site:youtube.com',
-#  'intitle:training increase endurance site:.gov -site:.gov -site:.edu resources OR links -site:youtube.com',
-#  'articles cardiovascular fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
-#  'tips progressive cardio -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'progressive overload site:.net -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'progressive overload running -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'advice cardio exercises -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'info progressive overload in fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'faq cardio training tips -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'intitle:workouts enhancing endurance site:.com -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'community fitness training -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'progressive overload cardio fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'discussion endurance sports progressive overload -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'news VO2 max improvement progressive overload -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'updates progressive training -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'support cardiovascular health -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'help fitness methods -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'content overload principle in cardio -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'directory endurance exercises -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'hub cardio workout plans -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'intitle:fitness progressive overload strategies site:.org -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'techniques improving cardio fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'ideas VO2 max workouts -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'insights endurance training methods -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'experts cardio training principles -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'knowledge progressive overload benefits -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'learn maximizing endurance -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'research cardio training science -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'science fitness overload -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'studies cardiovascular improvements -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'reports endurance workout tips -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'statistics VO2 max data -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'data progressive cardio training -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'analysis fitness endurance -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'overview cardio overload techniques -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'summary endurance building -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'concepts cardio fitness training -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'principles maximizing VO2 max -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'approaches endurance training plans -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'strategies cardio workout efficiency -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'methods progressive overload in cardio -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'techniques enhancing cardiovascular fitness -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'practices cardio training tips -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'case-studies endurance sports training -site:.gov -site:.edu resources OR links -site:youtube.com',
- 'examples VO2 max increasing workouts -site:.gov -site:.edu resources OR links -site:youtube.com']
-    
+    search_operators = [
+    "intext:https://www.osha.gov/construction after:2023",
+    "intext:https://www.constructionsafetyweek.com/ after:2023",
+    "intext:https://safetyculture.com/topics/construction-safety/ after:2023",
+    "intext:https://mscss.us/ultimate-guide-to-construction-safety-training/ after:2023",
+    "intext:https://www.procore.com/library/improve-construction-site-safety after:2023",
+    "intext:https://www.assp.org/news-and-articles/five-important-issues-in-construction-safety after:2023",
+    "'construction'site safety regulations inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety guidelines inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "OSHA 'construction'safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety best practices inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "safety equipment for 'construction'sites inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'site safety training inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety certification inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "hazard recognition in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety management inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "fall protection in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'health and safety plan inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "safety inspection for 'construction'site inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety risk assessment inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'site safety checklist inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "personal protective equipment in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety laws and regulations inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "electrical safety in 'construction'sites inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "scaffolding safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "fire prevention in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'noise control and safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "ergonomics in 'construction'safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "excavation and trenching safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety meetings and briefings inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'workplace' stress management in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety innovation and technology inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety audits and inspections inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "chemical safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety culture and leadership inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'safety policy and procedure manuals inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
+    "'construction'site safety for visitors inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023"
+]
 
-    for search_operator in search_queries:
-        if (counter == 170): break
+
+    # check_and_send(["https://decordiveseo.com/"])
+    # time.sleep(999)
+    urls=[]
+    for search_operator in search_operators:
         try:
             time.sleep(random.randrange(1, 5))
             driver.get(f"https://www.google.com/search?q={search_operator}")
             scroll_down()
-            urls = get_filter_urls(1, 61)
-            check_and_send(urls)
+            urls.extend(get_filter_urls(0, 17))
+            
+            
         except Exception:
             continue
+    print(urls)
 
-    #https://www.providencetherapybc.com/resources
-    #https://braininjuryconnectionsnw.org/resources/health-care-and-alternative-medical-practices/counselors-and-mental-health/
-    # check_and_send(["https://www.goshen1.org/resources/parents/mental_health_resources.php"])
+    try:
+        check_and_send(urls)
+    except Exception:
+        pass
     
 
     time.sleep(9999)
