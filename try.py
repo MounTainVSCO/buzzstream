@@ -9,7 +9,7 @@ from pynput.mouse import Button, Controller
 from selenium.common.exceptions import NoAlertPresentException
 import time, pyautogui, random, math
 import requests
-
+from selenium_recaptcha_solver import RecaptchaSolver
 
 
 def scroll_down():
@@ -35,18 +35,19 @@ def get_filter_urls(min_da, max_da):
     )
     print(serp_listings)
     
-    if (len(serp_listings) > 250):
-        serp_listings[:75]
+    if (len(serp_listings) > 20):
+        serp_listings[:20]
     for listing in serp_listings:
-        print(listing)
         try:
             da_element = listing.find_element(By.XPATH, ".//div[contains(@class, 'ah_serpbar__item-inner')]/span[contains(@class, 'ah_serpbar__item-label') and text()='dr']/following-sibling::span[contains(@class, 'ah_serpbar__item-data')]")
             da_number = float(da_element.text)
             
             if min_da <= da_number <= max_da:
-                listing_link = listing.find_element(By.TAG_NAME, 'a').get_attribute('href')
-                print(f"Domain Authority: {da_number} Link: {listing_link}")
-                urls.append(listing_link)
+            
+                listing_links = listing.find_element(By.TAG_NAME, 'a').get_attribute('href')
+                if ("gov" not in listing_links and "pdf" not in listing_links and "wordpress" not in listing_links and "wix" not in listing_links and "squarespace" not in listing_links and "weebly" not in listing_links):
+                    print(f"Domain Authority: {da_number} links: {listing_links}")
+                    urls.append(listing_links)
         except Exception as e:
             print(e)
             continue
@@ -72,22 +73,18 @@ def check_if_more_than_two_months(date_str, current_date=datetime.now()):
         return (current_date - date_obj).days >= 60
     except ValueError:
         return False
-    
-
-# IF NEED TO ADD PROJECT, ADD TO STREAM
-# CHECK IF RESEARCH PAGE URL EXISTS
 
 def check_and_send(url_list):
     
-    for i, link in enumerate(url_list):
+    for i, links in enumerate(url_list):
         time.sleep(2)
 
 
-        print(f"{i+1}/{len(url_list)} Checking Conditions For {link}")
+        print(f"{i+1}/{len(url_list)} Checking Conditions For {links}")
 
         has_not_been_logged_flag=False
         
-        driver.get(link)
+        driver.get(links)
         mouse.position = (-1500, 1020)
         mouse.click(Button.left, 1)
         pyautogui.keyDown('ctrl')
@@ -181,7 +178,7 @@ def check_and_send(url_list):
                     EC.presence_of_element_located((By.XPATH, "//li[@ng-class=\"{ active: isCurrentPath('/qualify') }\"]"))
                 ).click()
             except Exception:
-                pyautogui.hotkey("control-law -firm -attorney ", "0-law -firm -attorney ", interval=0.3)
+                pyautogui.hotkey("control","0", interval=0.3)
                 continue
         
             try:
@@ -213,7 +210,7 @@ def check_and_send(url_list):
                 continue
 
             try:
-                WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-link') and contains(., 'compose')]"))).click()
+                WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div[3]/div/react-component/div/div/div/div[3]/div[1]/div/button"))).click()
                     
             except Exception:
                 pyautogui.keyDown('ctrl')
@@ -256,7 +253,7 @@ def check_and_send(url_list):
             pyautogui.press('0')
             pyautogui.keyUp('ctrl')
 
-            print(f"Successfully Sequenced For {link}")
+            print(f"Successfully Sequenced For {links}")
 
         
         except Exception as e:
@@ -271,6 +268,8 @@ if (__name__=="__main__"):
     options.add_argument('--user-data-dir=/Users/dynas/AppData/Local/Google/Chrome/User Data/HelloWorld29')
     options.add_argument("--start-maximized")
     driver = webdriver.Chrome(options=options)
+    solver = RecaptchaSolver(driver=driver)
+
 
 
 
@@ -278,62 +277,61 @@ if (__name__=="__main__"):
     counter = 0
     mouse = Controller()
 
-    search_operators = [
+    search_operators =[
+    '"trauma" vehicle accident (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca'
+    '"traumatic brain injury" + "vehicle accident"(inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"PTSD" mental health (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"depression" + "vehicle accident" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"emotional trauma" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"accident recovery" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"traumatic stress" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"mental health support" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"coping strategies" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"stress management" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma therapy" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"grief counseling" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"emotional healing" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"survivor support" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma recovery" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"accident trauma" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma impacts" intext:wordpress OR intext:squarespace OR intext:weebely OR intext:weebly OR intext:wix OR inurl:resources OR inurl:link after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"psychological trauma" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma symptoms" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma healing" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"accident aftermath" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma intervention" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma research" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma resources" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"emotional distress" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma awareness" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma prevention" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"mental health awareness" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma and society" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca',
+    '"trauma recovery programs" (inurl:links OR inurl:resources) AND (intext:wordpress OR intext:squarespace OR intext:weebly OR intext:wix) after:2023 -law -firm -attorney -llc -.au -.uk -.ca'
+]
 
-    "'construction'site safety regulations inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety guidelines inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "OSHA 'construction'safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety best practices inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "safety equipment for 'construction'sites inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'site safety training inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety certification inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "hazard recognition in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety management inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "fall protection in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'health and safety plan inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "safety inspection for 'construction'site inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety risk assessment inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'site safety checklist inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "personal protective equipment in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety laws and regulations inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "electrical safety in 'construction'sites inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "scaffolding safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "fire prevention in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'noise control and safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "ergonomics in 'construction'safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "excavation and trenching safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety meetings and briefings inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'workplace' stress management in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety innovation and technology inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety audits and inspections inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "chemical safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety culture and leadership inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety policy and procedure manuals inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'site safety for visitors inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023"
-    ]
 
 
-    # check_and_send(["https://decordiveseo.com/"])
-    # time.sleep(999)
+
     filtered_urls=[]
     for search_operator in search_operators:
-        # print(search_operator)
-
-
         driver.get(f"https://www.google.com/search?q={search_operator}")
+
+        try:
+            
+            recaptcha_iframe = driver.find_element(By.XPATH, '//iframe[@title="reCAPTCHA"]')
+            solver.click_recaptcha_v2(iframe=recaptcha_iframe)
+        except Exception:
+            pass
+
         try:
             time.sleep(random.randrange(1, 5))
             scroll_down()
-            filtered_urls.extend(get_filter_urls(0, 16))
+            hi = get_filter_urls(1, 16)
+            check_and_send(hi)
             
         except Exception:
             continue
-    print(filtered_urls)
-
-    try:
-        check_and_send(filtered_urls)
-    except Exception:
-        pass
 
     #https://www.providencetherapybc.com/resources
     #https://braininjuryconnectionsnw.org/resources/health-care-and-alternative-medical-practices/counselors-and-mental-health/

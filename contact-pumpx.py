@@ -8,7 +8,7 @@ from selenium.webdriver import ActionChains
 from datetime import datetime
 from pynput.mouse import Button, Controller
 import time, pyautogui, random
-
+from selenium_recaptcha_solver import RecaptchaSolver
 counter = 0
 
 def scroll_down():
@@ -210,6 +210,7 @@ if (__name__ == '__main__'):
     driver.execute_script("document.body.style.zoom='70%'")
     action = ActionChains(driver)
     mouse = Controller()
+    solver = RecaptchaSolver(driver=driver)
 
 
     # mental-health-links, mental-health-resources, mental-health-links
@@ -218,65 +219,63 @@ if (__name__ == '__main__'):
     # 
 
     search_operators = [
-    "intext:https://www.osha.gov/construction after:2023",
-    "intext:https://www.constructionsafetyweek.com/ after:2023",
-    "intext:https://safetyculture.com/topics/construction-safety/ after:2023",
-    "intext:https://mscss.us/ultimate-guide-to-construction-safety-training/ after:2023",
-    "intext:https://www.procore.com/library/improve-construction-site-safety after:2023",
-    "intext:https://www.assp.org/news-and-articles/five-important-issues-in-construction-safety after:2023",
-    "'construction'site safety regulations inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety guidelines inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "OSHA 'construction'safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety best practices inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "safety equipment for 'construction'sites inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'site safety training inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety certification inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "hazard recognition in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety management inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "fall protection in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'health and safety plan inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "safety inspection for 'construction'site inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety risk assessment inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'site safety checklist inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "personal protective equipment in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety laws and regulations inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "electrical safety in 'construction'sites inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "scaffolding safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "fire prevention in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'noise control and safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "ergonomics in 'construction'safety inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "excavation and trenching safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety meetings and briefings inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'workplace' stress management in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety innovation and technology inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety audits and inspections inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "chemical safety in 'construction'inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety culture and leadership inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'safety policy and procedure manuals inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023",
-    "'construction'site safety for visitors inurl:wordpress OR intext:wordpress OR inurl:.org OR inurl:resources OR inurl:link after:2023"
+    "common 'car seat' mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' installation errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' safety tips inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "incorrect 'car seat' usage inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' adjustment mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' strap errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "forward-facing 'car seat' issues inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "rear-facing 'car seat' mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "booster seat common errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "child safety seat installation inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "best 'car seat's for safety inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' law compliance errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "choosing the right 'car seat' inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' belt mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' latch system errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "proper 'car seat' fit guide inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' expiration mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "second-hand 'car seat' risks inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' cleaning errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' manual mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "infant 'car seat' setup errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "convertible 'car seat' mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "all-in-one 'car seat' errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "travel system 'car seat' mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' head support errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' sunshade mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' winter cover errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' mirror setup mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' toy attachment errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' replacement guide inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' recall mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' base installation errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' canopy mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' angle adjuster errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' for preemies mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' for toddlers errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' for small cars mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' weight limit errors inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' height limit mistakes inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023",
+    "'car seat' safety standards inurl:wordpress OR inurl:squarespace OR inurl:.org OR inurl:resources OR inurl:link OR inurl:archive after:2023"
 ]
 
-
-    # check_and_send(["https://decordiveseo.com/"])
-    # time.sleep(999)
-    urls=[]
+    filtered_urls=[]
     for search_operator in search_operators:
+        driver.get(f"https://www.google.com/search?q={search_operator}")
+
+        try:
+            recaptcha_iframe = driver.find_element(By.XPATH, '//iframe[@title="reCAPTCHA"]')
+            solver.click_recaptcha_v2(iframe=recaptcha_iframe)
+        except Exception:
+            pass
+
         try:
             time.sleep(random.randrange(1, 5))
-            driver.get(f"https://www.google.com/search?q={search_operator}")
             scroll_down()
-            urls.extend(get_filter_urls(0, 17))
-            
+            hi = get_filter_urls(0, 16)
+            check_and_send(hi)
             
         except Exception:
             continue
-    print(urls)
-
-    try:
-        check_and_send(urls)
-    except Exception:
-        pass
-    
-
-    time.sleep(9999)
-    driver.quit()

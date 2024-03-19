@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from pynput.mouse import Button, Controller
 from selenium.common.exceptions import NoAlertPresentException
 import time, pyautogui, random, re, csv
+from selenium_recaptcha_solver import RecaptchaSolver
 
 def scroll_down():
     last_height = driver.execute_script("return document.body.scrollHeight")
@@ -49,11 +50,49 @@ if (__name__ == '__main__'):
     options.add_argument('--user-data-dir=/Users/dynas/AppData/Local/Google/Chrome/User Data/HelloWorld29')
     options.add_argument("--start-maximized")
     driver = webdriver.Chrome(options=options)
+    solver = RecaptchaSolver(driver=driver)
 
     search_queries = [
-
-    "core strength trainer",  # Focus on abdominal and back muscles
-    "flexibility coach",  # Focus on improving flexibility, complements gym training
+    "bodybuilding coach",  # Focus on building muscle mass and strength
+    "nutrition coach",  # Focus on developing healthy eating habits and meal planning
+    "weight loss coach",  # Focus on helping individuals lose weight through diet and exercise
+    "functional fitness trainer",  # Focus on improving overall strength and mobility for everyday tasks
+    "sports performance coach",  # Focus on enhancing athletic performance in specific sports
+    "yoga instructor",  # Focus on promoting physical and mental well-being through yoga practice
+    "pilates instructor",  # Focus on improving flexibility, strength, and endurance through pilates exercises
+    "HIIT coach",  # Focus on high-intensity interval training for cardiovascular health and fat loss
+    "boxing coach",  # Focus on teaching boxing techniques for fitness and self-defense
+    "circuit training coach",  # Focus on full-body workouts incorporating various exercises in a circuit format
+    "mindfulness coach",  # Focus on promoting mindfulness and stress reduction techniques
+    "stretching coach",  # Focus on improving flexibility and preventing injuries through stretching routines
+    "bootcamp instructor",  # Focus on intense group workouts combining cardio, strength, and endurance exercises
+    "barre instructor",  # Focus on low-impact exercises inspired by ballet, yoga, and pilates
+    "dance fitness instructor",  # Focus on choreographed dance routines for cardiovascular fitness and fun
+    "triathlon coach",  # Focus on training individuals for triathlon competitions, including swimming, cycling, and running
+    "marathon coach",  # Focus on preparing individuals for long-distance running events such as marathons
+    "cycling coach",  # Focus on improving cycling performance and technique for races or leisure
+    "swimming coach",  # Focus on teaching swimming skills and improving stroke technique
+    "strength and conditioning coach",  # Focus on developing strength, power, and endurance for athletes
+    "mobility coach",  # Focus on improving joint mobility and flexibility for enhanced movement
+    "kettlebell instructor",  # Focus on incorporating kettlebell exercises for strength and conditioning
+    "TRX trainer",  # Focus on suspension training using TRX straps for a full-body workout
+    "rowing coach",  # Focus on improving rowing technique and fitness for rowing competitions or general fitness
+    "parkour instructor",  # Focus on teaching parkour techniques for movement efficiency and agility
+    "bodyweight training coach",  # Focus on using bodyweight exercises for strength and conditioning
+    "group fitness instructor",  # Focus on leading group exercise classes in various formats such as cardio, strength, or dance
+    "functional movement coach",  # Focus on improving movement patterns for everyday activities and sports performance
+    "rehabilitation coach",  # Focus on designing exercise programs to aid in injury recovery and prevention
+    "posture coach",  # Focus on correcting posture imbalances and promoting proper alignment
+    "agility coach",  # Focus on improving agility, coordination, and reaction time for athletes
+    "aerial yoga instructor",  # Focus on yoga practice using suspended hammocks for added challenge and fun
+    "meditation instructor",  # Focus on teaching meditation techniques for stress reduction and mental clarity
+    "kayaking coach",  # Focus on teaching kayaking skills and techniques for recreational or competitive purposes
+    "virtual fitness coach",  # Focus on providing online coaching and workout programs for remote clients
+    "post-natal fitness coach",  # Focus on safe and effective exercises for postpartum women to regain strength and fitness
+    "senior fitness coach",  # Focus on tailored exercise programs for older adults to improve mobility and independence
+    "adaptive fitness coach",  # Focus on modifying exercises for individuals with disabilities or special needs
+    "youth fitness coach",  # Focus on promoting physical activity and healthy habits for children and teenagers
+    "Bikini Coach"
 ]
 
 
@@ -63,6 +102,12 @@ if (__name__ == '__main__'):
 
         for query in search_queries:
             driver.get(f"https://www.google.com/search?q={query}")
+            try:
+                
+                recaptcha_iframe = driver.find_element(By.XPATH, '//iframe[@title="reCAPTCHA"]')
+                solver.click_recaptcha_v2(iframe=recaptcha_iframe)
+            except Exception:
+                pass
             scroll_down()
             try:
                 

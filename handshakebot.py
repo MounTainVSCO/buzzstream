@@ -53,13 +53,13 @@ while curr_page < int(100):
                 print(f"title {title} and name {name}")
                 
                 message = f"""
-                Hi {first_name}, my name is William
-                I recently noticed your profile on Handshake and was intrigued by your business.
+                Hi my name is {first_name}
+                I recently noticed your profile and was intrigued by your business.
                 As someone who's passionate about helping businesses shine online, I couldn't help but think about the untapped potential of your website. I specialize in SEO, turning websites into revenue-generating assets by connecting you with the right audience.
                 I'd love to chat about your goals and see if there are some straightforward ways to enhance your site's performance in Google.
                 Would you be up for a quick call to show you what I’ve done for other businesses?
                 Looking forward to potentially chatting with you!
-                Best, William Zhao
+                Best, {name}
                 """
 
                 if first_name not in d and any(word in title for word in ["Owner", "CEO", "COO", "Director", "Manager", "Marketing", "Lead", "CMO"]):
